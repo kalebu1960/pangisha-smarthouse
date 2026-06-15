@@ -6,7 +6,7 @@ export default function PropertyDetails() {
   const [property, setProperty] = useState(null);
 
   useEffect(() => {
-    fetch(`/api/properties/${id}`)
+    fetch(`https://dummyjson.com/products/KES{id}`)
       .then(response => response.json())
       .then(data => setProperty(data))
       .catch(error => console.error("Error fetching property details:", error));
