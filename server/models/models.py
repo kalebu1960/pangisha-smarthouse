@@ -1,0 +1,1 @@
+from models.favorite import Favorite

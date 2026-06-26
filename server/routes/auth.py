@@ -1,21 +1,14 @@
 from flask import Blueprint, request, jsonify
-
 from extensions import db
-from models.user import User
-
-from flask_jwt_extended import (
-    create_access_token,
-    jwt_required,
-    get_jwt_identity
-)
+from models import User
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 auth_bp = Blueprint("auth", __name__)
 
-## Register route
+
 @auth_bp.route("/register", methods=["POST"])
 def register():
-
-    data = request.get_json()
+    data = request.get_json() or {}
 
     username = data.get("username")
     email = data.get("email")
@@ -24,21 +17,14 @@ def register():
     phone_number = data.get("phone_number")
 
     if not username or not email or not password:
-
-        return jsonify({
-            "error": "All required fields must be provided"
-        }), 400
+        return jsonify({"error": "Username, email and password are required"}), 400
 
     existing_user = User.query.filter(
-        (User.email == email) |
-        (User.username == username)
+        (User.email == email) | (User.username == username)
     ).first()
 
     if existing_user:
-
-        return jsonify({
-            "error": "User already exists"
-        }), 409
+        return jsonify({"error": "User already exists"}), 409
 
     user = User(
         username=username,
@@ -52,38 +38,25 @@ def register():
     db.session.add(user)
     db.session.commit()
 
-    return jsonify({
-        "message": "Account created successfully"
-    }), 201
+    return jsonify({"message": "Account created successfully"}), 201
 
-## Login route
+
 @auth_bp.route("/login", methods=["POST"])
 def login():
-
-    data = request.get_json()
+    data = request.get_json() or {}
 
     email = data.get("email")
     password = data.get("password")
 
-    user = User.query.filter_by(
-        email=email
-    ).first()
+    if not email or not password:
+        return jsonify({"error": "Email and password are required"}), 400
 
-    if not user:
+    user = User.query.filter_by(email=email).first()
 
-        return jsonify({
-            "error": "Invalid email or password"
-        }), 401
+    if not user or not user.check_password(password):
+        return jsonify({"error": "Invalid email or password"}), 401
 
-    if not user.check_password(password):
-
-        return jsonify({
-            "error": "Invalid email or password"
-        }), 401
-
-    token = create_access_token(
-        identity=str(user.id)
-    )
+    token = create_access_token(identity=str(user.id))
 
     return jsonify({
         "token": token,
@@ -91,24 +64,21 @@ def login():
             "id": user.id,
             "username": user.username,
             "role": user.role,
-            "email": user.email
+            "email": user.email,
+            "phone_number": user.phone_number
         }
     }), 200
 
-## Current Logged user
+
 @auth_bp.route("/me", methods=["GET"])
 @jwt_required()
 def me():
-
     user_id = get_jwt_identity()
 
-    user = User.query.get(user_id)
+    user = User.query.get(int(user_id))
 
     if not user:
-
-        return jsonify({
-            "error": "User not found"
-        }), 404
+        return jsonify({"error": "User not found"}), 404
 
     return jsonify({
         "id": user.id,

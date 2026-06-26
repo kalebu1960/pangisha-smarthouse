@@ -9,6 +9,7 @@ from extensions import db
 
 from models.favorite import Favorite
 from models.property import Property
+from models.user import User
 
 from schemas.favorite_schema import (
     favorite_schema,
