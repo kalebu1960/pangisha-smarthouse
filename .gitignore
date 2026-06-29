@@ -1,15 +1,32 @@
-# Environment variables
-.env
+# =========================
+# Backend (Flask)
+# =========================
 
-# Python virtual environment
-venv/
+server/.env
+server/venv/
+server/__pycache__/
+server/*.pyc
+server/instance/
+server/.pytest_cache/
 
-# Python cache
-__pycache__/
-*.pyc
+# =========================
+# Frontend (React/Vite)
+# =========================
 
-# Node modules
 frontend/node_modules/
-
-# Build files
 frontend/dist/
+frontend/.vite/
+
+# =========================
+# IDE Files
+# =========================
+
+.vscode/
+.idea/
+
+# =========================
+# Operating System Files
+# =========================
+
+.DS_Store
+Thumbs.db
