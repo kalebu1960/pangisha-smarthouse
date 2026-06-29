@@ -1,0 +1,16 @@
+import api from "./axios";
+
+export async function addFavorite(propertyId) {
+  const response = await api.post(`/favorites/${propertyId}`);
+  return response.data;
+}
+
+export async function getFavorites() {
+  const response = await api.get("/favorites");
+  return response.data;
+}
+
+export async function removeFavorite(id) {
+  const response = await api.delete(`/favorites/${id}`);
+  return response.data;
+}

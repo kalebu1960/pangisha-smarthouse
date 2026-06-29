@@ -11,10 +11,12 @@ class Favorite(db.Model):
 
     user_id = db.Column(
         db.Integer,
-        db.ForeignKey("users.id")
+        db.ForeignKey("users.id"),
+        nullable=False
     )
 
     property_id = db.Column(
         db.Integer,
-        db.ForeignKey("properties.id")
+        db.ForeignKey("properties.id"),
+        nullable=False
     )
