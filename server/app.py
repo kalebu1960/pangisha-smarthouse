@@ -36,6 +36,8 @@ bcrypt.init_app(app)
 jwt.init_app(app)
 ma.init_app(app)
 
+from models import *
+
 # Register blueprints
 app.register_blueprint(auth_bp)
 app.register_blueprint(properties_bp)

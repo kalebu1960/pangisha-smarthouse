@@ -1,0 +1,32 @@
+# =========================
+# Backend (Flask)
+# =========================
+
+server/.env
+server/venv/
+server/__pycache__/
+server/*.pyc
+server/instance/
+server/.pytest_cache/
+
+# =========================
+# Frontend (React/Vite)
+# =========================
+
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# =========================
+# IDE Files
+# =========================
+
+.vscode/
+.idea/
+
+# =========================
+# Operating System Files
+# =========================
+
+.DS_Store
+Thumbs.db

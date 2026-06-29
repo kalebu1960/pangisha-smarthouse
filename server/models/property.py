@@ -19,7 +19,11 @@ class Property(db.Model):
 
     property_type = db.Column(db.String(100))
 
-    image_url = db.Column(db.String(500))
+    images = db.relationship(
+    "PropertyImage",
+    backref="property",
+    cascade="all, delete-orphan"
+    )
 
     location_name = db.Column(db.String(255))
 
