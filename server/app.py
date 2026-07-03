@@ -20,8 +20,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 # Allow React frontend to communicate with Flask
-CORS(app)
-
+CORS(app, origins=["https://deft-lily-0b05b4.netlify.app"])
 # Initialize database first
 db.init_app(app)
 
