@@ -39,6 +39,9 @@ app.register_blueprint(properties_bp)
 app.register_blueprint(favorites_bp)
 app.register_blueprint(inquiries_bp)
 
+with app.app_context():
+    db.create_all()
+
 # Health check route
 @app.route("/")
 def home():
