@@ -7,7 +7,8 @@ from extensions import (
     migrate,
     bcrypt,
     jwt,
-    ma
+    ma,
+    mail
 )
 
 from flask_cors import CORS
@@ -32,6 +33,7 @@ CORS(
         r"/*": {
             "origins": [
                 "http://localhost:5173",
+                "http://127.0.0.1:5173",
                 "https://pangisha-smarthouse-client-koddf69m9-d-bengos-projects.vercel.app"
             ]
         }
@@ -42,6 +44,7 @@ CORS(
 # Initialize extensions
 db.init_app(app)
 migrate.init_app(app, db)
+mail.init_app(app)
 
 bcrypt.init_app(app)
 jwt.init_app(app)
@@ -64,25 +67,6 @@ def home():
     return {
         "message": "Pangisha SmartHouse API is running"
     }, 200
-
-if __name__ == "__main__":
-    app.run(
-        debug=True,
-        port=5555
-    )
-app.register_blueprint(favorites_bp)
-app.register_blueprint(inquiries_bp)
-# Future blueprints
-# app.register_blueprint(favorites_bp)
-# app.register_blueprint(inquiries_bp)
-
-# Health check route
-@app.route("/")
-def home():
-    return {
-        "message": "Pangisha SmartHouse API is running"
-    }, 200
-
 
 if __name__ == "__main__":
     app.run(

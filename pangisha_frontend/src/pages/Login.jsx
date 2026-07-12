@@ -174,6 +174,15 @@ export default function Login() {
   </div>
 </div>
 
+              <div className="flex justify-end">
+                <Link
+                  to="/forgot-password"
+                  className="text-sm text-blue-600 hover:text-blue-800 hover:underline transition"
+                >
+                  Forgot Password?
+                </Link>
+              </div>
+
               <button
                 disabled={loading}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl transition duration-300"

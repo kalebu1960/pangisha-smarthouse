@@ -12,6 +12,8 @@ import Dashboard from "./pages/Dashboard";
 import Favorites from "./pages/Favorites";
 import AddProperty from "./pages/AddProperty";
 import EditProperty from "./pages/EditProperty";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 export default function App() {
   const location = useLocation();
@@ -34,6 +36,8 @@ export default function App() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/home" element={<Home />} />
         <Route path="/properties" element={<Properties />} />
         <Route path="/property/:id" element={<PropertyDetails />} />

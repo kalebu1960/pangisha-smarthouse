@@ -16,6 +16,8 @@ python-dotenv = "*"
 flask-cors = "*"
 marshmallow-sqlalchemy = "*"
 gunicorn = "*"
+flask-mail = "*"
+itsdangerous = "*"
 
 [dev-packages]
 
