@@ -117,3 +117,25 @@ def me():
         "role": user.role,
         "phone_number": user.phone_number
     }), 200
+
+
+@auth_bp.route("/forgot-password", methods=["POST"])
+def forgot_password():
+    data = request.get_json(silent=True) or {}
+    email = (data.get("email") or "").strip().lower()
+
+    if not email:
+        return jsonify({
+            "error": "Please provide your email address"
+        }), 400
+
+    user = User.query.filter_by(email=email).first()
+
+    if user:
+        # In a production app, this is where an email reset link would be sent.
+        # For now we keep the response generic to avoid leaking account existence.
+        pass
+
+    return jsonify({
+        "message": "If an account exists for that email, we will send reset instructions shortly."
+    }), 200

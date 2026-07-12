@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import loginBackground from "../assets/Image.jpg";
 
 
-import { loginUser } from "../api/authApi";
+import { forgotPassword, loginUser } from "../api/authApi";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
@@ -17,6 +17,7 @@ export default function Login() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -65,6 +66,32 @@ export default function Login() {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!formData.email) {
+      Swal.fire({
+        icon: "warning",
+        title: "Email required",
+        text: "Please enter your email address first.",
+      });
+      return;
+    }
+
+    try {
+      const response = await forgotPassword(formData.email);
+      Swal.fire({
+        icon: "success",
+        title: "Request received",
+        text: response.message,
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Request failed",
+        text: error.response?.data?.error || "Unable to process your request right now.",
+      });
     }
   };
 
@@ -148,14 +175,33 @@ export default function Login() {
                   Password
                 </label>
 
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="********"
-                  className="w-full border rounded-xl p-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="********"
+                    className="w-full border rounded-xl p-3 pr-12 focus:ring-2 focus:ring-blue-500 outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-blue-600"
+                  >
+                    {showPassword ? "🙈" : "👁️"}
+                  </button>
+                </div>
+
+                <div className="flex justify-end mt-2">
+                  <button
+                    type="button"
+                    onClick={handleForgotPassword}
+                    className="text-sm text-blue-600 hover:underline"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
               </div>
 
               <button
